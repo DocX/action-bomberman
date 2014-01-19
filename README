@@ -1,0 +1,127 @@
+ACTION BOMBERMAN
+****************
+
+Zápočtová práce Programování 2
+Autor: Lukáš Doležal, 2010
+
+School of Computer Science
+Charles Univerisity in Prague
+Faculty of Mathematics and Physics
+
+CREDITS
+=======
+
+Programming:
+Lukáš Doležal
+
+Graphics:
+Theme from Granatier project by Arturo Silva (jasilva28@gmail.com)
+Character stripes by Lukáš Doležal
+
+BUILD
+=====
+
+Requiremenets:
+* qmake
+* Qt 4.6 (qt-core, qt-gui, qt-svg)
+
+Building on Linux:
+---------------
+
+cd <path_to_this_directory>
+mkdir build
+cd build
+qmake ..\actionbomberman.pro
+make
+rm *.o *.h *.cpp MakeFile
+
+copy "data" folder to build folder.
+
+Building on Windows:
+-----------------
+
+Download QtSDK minGW version from qt.nokia.com and install it.
+
+in command line
+
+PATH=%PATH%;C:\Qt\qt\bin;C:\Qt\mingw\bin
+cd <path_to_this_directory>
+mkdir build
+cd build
+qmake.exe ..\actionbomberman.pro
+mingw32-make.exe release
+
+and copy needed DLLs:
+cd Release
+cp C:\Qt\qt\bin\QtCore4.dll .
+cp C:\Qt\qt\bin\QtGui4.dll .
+cp C:\Qt\qt\bin\QtSvg4.dll .
+cp C:\Qt\mingw\bin\libgcc_s_dw2-1.dll .
+cp C:\Qt\mingw\bin\mingwm10.dll .
+
+delete *.o files and copy data folder
+
+ARENA FILES
+===========
+
+All files located in data/arenas directory are treated as map
+definition files. They are listed in pre-game menu. These files
+have to be in right format (see ARENA FILE FORMAT).
+
+ARENA FILE FORMAT
+=================
+
+Arena file is simple text file which consists of 3 sections.
+First is dimension declaration, second is map tiles definition
+and third is starting positions list. All sections is immediately
+after each other without spaces.
+
+First section is only one line with number of rows and columns
+of map, in that order. For example (4 rows, 5 columns)
+
+4 5
+
+Second section contains "bitmap" of arena map. Each tile have
+two letters and each tile is seperated with space and each map
+row is on separated line.
+First tile letter defines surface, second bonus on tile.
+Surfaces:
+  G .. ground
+  W .. unexplosive wall
+  B .. explosive bricks
+  R .. randomly B or G
+Bonuses:
+  N .. none
+  R .. random (from both good and bad and none)
+  G .. random from good
+  D .. random from bad
+  
+  B .. bomb (good)
+  P .. power (good)
+  S .. speed inc (good)
+  K .. kick (add ability to kick bombs) (good)
+  I .. shield (good)
+
+  L .. temprary slowness (bad)
+  H .. hyperactive (placing bombs all time) (bad)
+  W .. wet (cannot place bombs) (bad)
+  
+For example (4x5 map with wall around and some bonuses)
+
+WN WN WN WN WN
+WN GB GN GS WN
+WN GP GN GK WN
+WN WN WN WN WN
+
+Third section is list of starting positions in format
+similar to first section. 2 numbers per line. This positions
+are used for creating game. If there is less positions than
+players, more players can be placed at one position. So
+create at least 4 or 5 positions. Columns and rows are counted
+from 0 (first column is 0, second 1,...)
+
+For example (positions on tiles w/o bonuses from above):
+
+1 2
+2 2
+
